@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package quotes;
+
+message QuoteAuthor {
+  string id = 1;
+  string name = 2;
+}
+
+message QuoteTranslation {
+  string language = 1;
+  string text = 2;
+}
+
+message Quote {
+	string id = 1;
+  QuoteAuthor author = 2;
+  repeated QuoteTranslation translations = 3;
+}
+
+message QuoteRequest {
+  string id = 1;
+}
+
+message AuthorRequest {
+  string id = 1;
+}
+
+message FilterQuotesRequest {
+  string author = 1;
+  string tag = 2;
+  string text = 3;
+  int32 limit = 4;
+  string after = 5;
+}
+
+message QuoteResponse {
+  repeated Quote quotes = 1;
+}
+
+message QuoteAuthorResponse {
+  repeated QuoteAuthor authors = 1;
+}
+
+service QuotesService {
+  rpc FilterQuotes (FilterQuotesRequest) returns (QuoteResponse) {}
+  rpc GetQuote (QuoteRequest) returns (QuoteResponse) {}
+  rpc GetAuthor (AuthorRequest) returns (QuoteAuthorResponse) {}
+}
