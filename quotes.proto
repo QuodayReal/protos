@@ -26,12 +26,18 @@ message AuthorRequest {
   string id = 1;
 }
 
-message FilterQuotesRequest {
+message LimitFilter {
+  int32 skip = 1;
+  int32 limit = 2;
+}
+
+message SearchQuotesRequest {
   string author = 1;
   string tag = 2;
   string text = 3;
-  int32 limit = 4;
-  string after = 5;
+  optional bool random = 4;
+  LimitFilter limit = 5;
+
 }
 
 message QuoteResponse {
@@ -43,7 +49,7 @@ message QuoteAuthorResponse {
 }
 
 service QuotesService {
-  rpc FilterQuotes (FilterQuotesRequest) returns (QuoteResponse) {}
+  rpc SearchQuotes (SearchQuotesRequest) returns (QuoteResponse) {}
   rpc GetQuote (QuoteRequest) returns (QuoteResponse) {}
   rpc GetAuthor (AuthorRequest) returns (QuoteAuthorResponse) {}
 }
